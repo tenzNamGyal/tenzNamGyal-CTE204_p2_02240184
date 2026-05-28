@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>📚 Academic Tracker</h1>
+  <p>Track subjects, marks, credits &amp; GPA</p>
+</header>
+<h2>Students</h2>
+
+<input type="text" id="studentName" placeholder="Student Name">
+<input type="number" id="studentSemester" placeholder="Semester">
+
+<button onclick="addStudent()">Add Student</button>
+
+<ul id="studentList"></ul>
+<main>
+  <section class="card">
+    <h2>Add Subject</h2>
+    <form id="form">
+      <input id="subject" placeholder="Subject Name" autocomplete="off">
+      <input id="marks" type="number" placeholder="Marks (0–100)" min="0" max="100">
+      <select id="credits">
+        <option value="1">1 Credit</option>
+        <option value="2">2 Credits</option>
+        <option value="3">3 Credits</option>
+        <option value="4">4 Credits</option>
+      </select>
+      <button type="submit">Add Subject</button>
+    </form>
+    <p id="error"></p>
+  </section>
+  <section class="card stats">
+    <div>GPA <h3 id="gpa">0.00</h3></div>
+    <div>Subjects <h3 id="count">0</h3></div>
+    <div>Average <h3 id="avg">0</h3></div>
+  </section>
+  <section class="card">
+    <div class="table-header">
+      <h2>Subject List</h2>
+      <button id="clearBtn" class="clear-btn" onclick="clearAll()">Clear All</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th><th>Marks</th><th>Grade</th><th>Credits</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+    <p id="empty" class="empty-msg">No subjects added yet.</p>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
