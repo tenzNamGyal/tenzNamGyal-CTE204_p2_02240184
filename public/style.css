@@ -1,5 +1,5 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
   background: #eef2ff;
 }
@@ -31,7 +31,7 @@ input, select, button {
   margin: 5px 0;
   border-radius: 6px;
   border: 1px solid #ccc;
-  box-sizing: border-box; /* Optional fix to keep styling inputs neat */
+  box-sizing: border-box;
 }
 
 button {

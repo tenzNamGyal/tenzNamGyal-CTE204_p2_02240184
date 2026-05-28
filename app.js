@@ -7,26 +7,22 @@ const errorHandler = require('./src/middleware/errorHandler');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors()); // Allows frontend to make fetch requests to this backend
-app.use(express.json()); // Parses incoming JSON payloads
+// Serve static elements directly out of public directory
+app.use(express.static('public'));
 
-// Mount Routes
+app.use(cors());
+app.use(express.json());
+
+// API Layer Route Registration
 app.use('/api/subjects', subjectRoutes);
 
-// Health check route
-app.get('/', (req, res) => {
-  res.json({ message: 'Academic Tracker API is running smoothly!' });
-});
-
-// 404 Route Catch-all
+// Fallback Route for non-matching assets
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Endpoint not found' });
+  res.status(404).json({ success: false, message: 'Resource path not found' });
 });
 
-// Global Error Handler Middleware
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running live on http://localhost:${PORT}`);
+  console.log(`🚀 System server handling operations live on http://localhost:${PORT}`);
 });

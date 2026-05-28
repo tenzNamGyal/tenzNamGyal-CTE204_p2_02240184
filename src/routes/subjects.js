@@ -6,7 +6,6 @@ const {
   deleteSubject
 } = require('../controllers/subjectController');
 
-// REST Router configuration map
 router.get('/', getAllSubjects);
 router.post('/', createSubject);
 router.delete('/:id', deleteSubject);

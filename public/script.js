@@ -1,7 +1,5 @@
-// script.js — Updated to use relative pathing for the public folder
 const API_URL = '/api/subjects';
 
-// ── Grade Logic ──────────────────────────────────────────────────
 function getGrade(m) {
   if (m >= 90) return 'A';
   if (m >= 80) return 'B';
@@ -9,11 +7,11 @@ function getGrade(m) {
   if (m >= 60) return 'D';
   return 'F';
 }
+
 function getPoints(g) {
   return { A: 4, B: 3, C: 2, D: 1, F: 0 }[g];
 }
 
-// ── Load all subjects from the API ──────────────────────────────
 async function loadSubjects() {
   try {
     const response = await fetch(API_URL);
@@ -22,11 +20,10 @@ async function loadSubjects() {
     render(result.data);
   } catch (err) {
     console.error('Error loading subjects:', err);
-    document.getElementById('error').textContent = 'Could not connect to server. Is the API running?';
+    document.getElementById('error').textContent = 'Could not connect to server.';
   }
 }
 
-// ── Add a subject (POST to API) ──────────────────────────────────
 async function addSubject() {
   const subject = document.getElementById('subject').value.trim();
   const marks   = Number(document.getElementById('marks').value);
@@ -59,18 +56,16 @@ async function addSubject() {
   }
 }
 
-// ── Delete a subject (DELETE to API) ────────────────────────────
 async function removeSubject(id) {
   try {
     const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-    if (!response.ok) { console.error('Failed to delete'); return; }
+    if (!response.ok) return;
     await loadSubjects();
   } catch (err) {
     console.error('Error deleting subject:', err);
   }
 }
 
-// ── Render the table and stats ────────────────────────────────────
 function render(data) {
   const list = document.getElementById('list');
   list.innerHTML = '';
@@ -80,15 +75,18 @@ function render(data) {
   data.forEach(item => {
     const grade = getGrade(item.marks);
     const tr  = document.createElement('tr');
+    
     const td1 = document.createElement('td'); td1.textContent = item.subject;
     const td2 = document.createElement('td'); td2.textContent = item.marks;
     const td3 = document.createElement('td'); td3.textContent = grade;
     const td4 = document.createElement('td'); td4.textContent = item.credits;
+    
     const td5 = document.createElement('td');
     const btn = document.createElement('button');
     btn.textContent = 'Delete';
     btn.onclick = () => removeSubject(item.id);
     td5.appendChild(btn);
+    
     tr.append(td1, td2, td3, td4, td5);
     list.appendChild(tr);
 
@@ -105,11 +103,9 @@ function render(data) {
   document.getElementById('count').textContent = data.length;
 }
 
-// ── Form event ───────────────────────────────────────────────────
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
   addSubject();
 });
 
-// ── Initial load ─────────────────────────────────────────────────
 loadSubjects();
